@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import axios from "axios";
+import { API_URL } from "@/helpers/constants";
 
 export const useMainStore = defineStore({
   id: "main",
@@ -15,9 +16,7 @@ export const useMainStore = defineStore({
   actions: {
     fetchCollections() {
       axios
-        .get(
-          "https://staging-api.bloobloom.com/user/v1/sales_channels/website/collections"
-        )
+        .get("https://staging-api.bloobloom.com/user/v1/sales_channels/website")
         .then((response) => {
           if (response.status !== 200) {
             throw new Error("An Error Occurred");
@@ -25,14 +24,10 @@ export const useMainStore = defineStore({
           this.collections = response.data.collections;
         });
     },
-    fetchGlasses() {
-      axios
-        .get(
-          "https://staging-api.bloobloom.com/user/v1/sales_channels/website/collections"
-        )
-        .then((response) => {
-          console.log(response);
-        });
+    fetchGlasses(api) {
+      axios.get(`${API_URL}${api}`).then((response) => {
+        this.glasses = response.data.glasses;
+      });
     },
   },
 });

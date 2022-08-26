@@ -5,12 +5,11 @@
       <nav class="flex items-center justify-between h-10 bg-white md:h-12">
         <div class="flex items-center w-1/4 h-full font-light">
           <div
-            class="items-center justify-center flex-1 hidden h-full text-center border-t border-b border-r border-black cursor-pointer md:flex"
+            class="items-center justify-center flex-1 hidden h-full text-center border-t border-b border-r border-black cursor-pointer group md:flex"
+            @mouseenter="isSideMenuOpen = true"
+            @mouseleave="isSideMenuOpen = false"
           >
-            <div
-              class="border-b border-transparent hover:border-black"
-              @mouseenter="isSideMenuOpen = true"
-            >
+            <div class="border-b border-transparent group-hover:border-black">
               Menu
             </div>
           </div>
@@ -49,7 +48,7 @@
               v-if="!isSideMenuOpen"
             >
               <div
-                class="border-b border-transparent hover:border-black"
+                class="border-b border-transparent group-hover:border-black"
                 @click="isSideMenuOpen = true"
               >
                 Menu
@@ -77,16 +76,16 @@
             </div>
           </div> -->
           <div
-            class="items-center justify-center flex-1 hidden h-full text-center border-t border-b border-r border-black cursor-pointer md:flex"
+            class="items-center justify-center flex-1 hidden h-full text-center border-t border-b border-r border-black cursor-pointer group md:flex"
           >
-            <div class="border-b border-transparent hover:border-black">
+            <div class="border-b border-transparent group-hover:border-black">
               Free Eye Test
             </div>
           </div>
           <div
-            class="items-center justify-center flex-1 hidden h-full text-center border-t border-b border-r border-black cursor-pointer md:flex"
+            class="items-center justify-center flex-1 hidden h-full text-center border-t border-b border-r border-black cursor-pointer group md:flex"
           >
-            <div class="border-b border-transparent hover:border-black">
+            <div class="border-b border-transparent group-hover:border-black">
               About Us
             </div>
           </div>
@@ -98,23 +97,23 @@
         </div>
         <div class="flex items-center w-1/4 h-full font-light">
           <div
-            class="items-center justify-center flex-1 hidden h-full text-center border-t border-b border-l border-black cursor-pointer md:flex"
+            class="items-center justify-center flex-1 hidden h-full text-center border-t border-b border-l border-black cursor-pointer group md:flex"
           >
-            <div class="border-b border-transparent hover:border-black">
+            <div class="border-b border-transparent group-hover:border-black">
               Help
             </div>
           </div>
           <div
-            class="items-center justify-center flex-1 hidden h-full text-center border-t border-b border-l border-black cursor-pointer md:flex"
+            class="items-center justify-center flex-1 hidden h-full text-center border-t border-b border-l border-black cursor-pointer group md:flex"
           >
-            <div class="border-b border-transparent hover:border-black">
+            <div class="border-b border-transparent group-hover:border-black">
               Login
             </div>
           </div>
           <div
-            class="flex items-center justify-center flex-1 h-full text-sm text-center border-t border-b border-l border-black cursor-pointer md:text-normal"
+            class="flex items-center justify-center flex-1 h-full text-sm text-center border-t border-b border-l border-black cursor-pointer group md:text-normal"
           >
-            <div class="border-b border-transparent hover:border-black">
+            <div class="border-b border-transparent group-hover:border-black">
               Bag(0)
             </div>
           </div>
@@ -127,6 +126,5 @@
 <script setup>
 import SideNav from "@/components/layout/SideNav.vue";
 import { ref } from "vue";
-
 const isSideMenuOpen = ref(false);
 </script>

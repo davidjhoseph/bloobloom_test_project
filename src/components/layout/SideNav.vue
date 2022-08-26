@@ -68,6 +68,7 @@
     </div>
     <div
       class="absolute z-10 flex flex-col justify-between w-screen h-screen pt-10 transition-all duration-300 ease-linear transform -translate-x-full bg-white border border-black md:pt-12 md:w-1/4"
+      @mouseenter="modal = true"
       :class="[modal ? 'translate-x-0' : '-translate-x-full']"
     >
       <div>

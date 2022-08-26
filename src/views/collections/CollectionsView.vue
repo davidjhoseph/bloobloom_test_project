@@ -17,9 +17,11 @@
       </div>
       <div class="transition-all duration-300 ease-in transform">
         <div
-          class="flex items-center justify-between p-6 font-bold border border-black"
+          class="flex flex-col items-center justify-between font-bold border border-black md:px-6 md:py-1 md:flex-row"
         >
-          <div class="flex items-center space-x-4">
+          <div
+            class="flex items-center order-last py-4 space-x-4 md:order-first md:py-0"
+          >
             <div>TRIAL AVAILABLE</div>
             <div
               class="w-12 h-4 border border-black p-0.5 flex"
@@ -42,13 +44,19 @@
               ></div>
             </div>
           </div>
-          <div class="text-2xl uppercase">{{routeName}}</div>
-          <div class="flex items-center space-x-6">
+          <div
+            class="w-full py-4 text-xl text-center uppercase border-b border-black md:text-2xl md:w-auto md:py-0 md:border-none"
+          >
+            {{ routeName }}
+          </div>
+          <div
+            class="flex items-center w-full border-b border-black md:space-x-6 md:w-auto md:py-0 md:border-none"
+          >
             <div
-              class="flex items-center space-x-2 cursor-pointer"
+              class="flex items-center justify-center w-1/2 space-x-2 border-r border-black cursor-pointer md:w-auto md:border-none md:justify-left"
               @click="isFilter = !isFilter"
             >
-              <div>FILTERS</div>
+              <div class="py-4">FILTERS</div>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -64,7 +72,9 @@
                 />
               </svg>
             </div>
-            <div class="flex items-center space-x-2 cursor-pointer">
+            <div
+              class="flex items-center justify-center w-1/2 space-x-2 cursor-pointer md:w-auto md:justify-left"
+            >
               <div>SEARCH</div>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -216,9 +226,20 @@
 
 <script setup>
 import AppLayout from "@/components/layout/AppLayout.vue";
-import {useRoute} from 'vue-router'
-import { ref, computed } from "vue";
+import { useRoute } from "vue-router";
+import { ref, computed, watch , onMounted} from "vue";
+import { useMainStore } from "@/stores/main";
+const store = useMainStore();
 const route = useRoute();
+onMounted(() => {
+  store.fetchGlasses(`${route.path}/glasses`);
+});
+watch(
+  () => route.path,
+  (value) => {
+    store.fetchGlasses(`${value}/glasses`);
+  }
+);
 const routeName = computed(() => route.name);
 const isTrialAvailable = ref(false);
 const isFilter = ref(false);
