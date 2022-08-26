@@ -42,7 +42,7 @@
               ></div>
             </div>
           </div>
-          <div class="text-2xl">SPECTACLES WOMEN</div>
+          <div class="text-2xl uppercase">{{routeName}}</div>
           <div class="flex items-center space-x-6">
             <div
               class="flex items-center space-x-2 cursor-pointer"
@@ -210,12 +210,16 @@
         </div>
       </div>
     </div>
+    <RouterView />
   </AppLayout>
 </template>
 
 <script setup>
 import AppLayout from "@/components/layout/AppLayout.vue";
-import { ref } from "vue";
+import {useRoute} from 'vue-router'
+import { ref, computed } from "vue";
+const route = useRoute();
+const routeName = computed(() => route.name);
 const isTrialAvailable = ref(false);
 const isFilter = ref(false);
 </script>

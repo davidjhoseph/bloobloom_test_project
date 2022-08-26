@@ -1,16 +1,38 @@
 import { defineStore } from "pinia";
+import axios from "axios";
 
-export const useCounterStore = defineStore({
-  id: "counter",
+export const useMainStore = defineStore({
+  id: "main",
   state: () => ({
-    counter: 0,
+    glasses: [],
+    collections: [],
   }),
   getters: {
-    doubleCount: (state) => state.counter * 2,
+    getGlasses: (state) => state.glasses,
+    getCollections: (state) => state.glasses,
   },
+
   actions: {
-    increment() {
-      this.counter++;
+    fetchCollections() {
+      axios
+        .get(
+          "https://staging-api.bloobloom.com/user/v1/sales_channels/website/collections"
+        )
+        .then((response) => {
+          if (response.status !== 200) {
+            throw new Error("An Error Occurred");
+          }
+          this.collections = response.data.collections;
+        });
+    },
+    fetchGlasses() {
+      axios
+        .get(
+          "https://staging-api.bloobloom.com/user/v1/sales_channels/website/collections"
+        )
+        .then((response) => {
+          console.log(response);
+        });
     },
   },
 });

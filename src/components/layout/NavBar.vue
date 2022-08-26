@@ -10,7 +10,6 @@
             <div
               class="border-b border-transparent hover:border-black"
               @mouseenter="isSideMenuOpen = true"
-              @mouseleave="isSideMenuOpen = false"
             >
               Menu
             </div>
