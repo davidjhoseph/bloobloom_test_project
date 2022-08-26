@@ -3,7 +3,7 @@
     <div class="">
       <NavBar />
     </div>
-    <div class="flex-1 pt-10 overflow-y-auto md:pt-12">
+    <div class="flex-1 pt-10 overflow-hidden overflow-y-auto md:pt-12">
       <slot />
     </div>
   </div>
