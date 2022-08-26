@@ -68,8 +68,9 @@
     </div>
     <div
       class="absolute z-10 flex flex-col justify-between w-screen h-screen pt-10 transition-all duration-300 ease-linear transform -translate-x-full bg-white border border-black md:pt-12 md:w-1/4"
-      @mouseenter="modal = true"
-      :class="[modal ? 'translate-x-0' : '-translate-x-full']"
+      @mouseenter="isSecondarySideBarOpen = true"
+      @mouseleave="isSecondarySideBarOpen = false"
+      :class="[sideBarState ? 'translate-x-0' : '-translate-x-full']"
     >
       <div>
         <div
@@ -162,11 +163,17 @@
 </template>
 
 <script setup>
-import { ref, toRef, watch } from "vue";
+import { ref, toRef, watch, computed } from "vue";
 import { useRouter } from "vue-router";
 const isMenuOpen = ref(false);
 const router = useRouter();
 const modal = toRef(props, "openMenu");
+const isSecondarySideBarOpen = ref(false);
+const sideBarState = computed(() => {
+  if (isSecondarySideBarOpen.value && !modal.value) return true;
+  if (!isSecondarySideBarOpen.value && !modal.value) return false;
+  return modal.value;
+});
 const selectedGender = ref("women");
 const props = defineProps({
   openMenu: {
