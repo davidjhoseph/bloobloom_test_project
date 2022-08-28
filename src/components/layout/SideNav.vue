@@ -5,7 +5,7 @@
       :class="[isMenuOpen ? 'translate-x-0' : '-translate-x-full']"
     >
       <div
-        @click="toggleMenu"
+        @click="closeMenu"
         class="flex items-center justify-between p-3 text-lg uppercase border-b border-black md:p-4 hover:bg-black hover:text-white"
       >
         <svg
@@ -164,9 +164,10 @@
 
 <script setup>
 import { ref, toRef, watch, computed } from "vue";
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 const isMenuOpen = ref(false);
 const router = useRouter();
+const route = useRoute();
 const modal = toRef(props, "openMenu");
 const isSecondarySideBarOpen = ref(false);
 const sideBarState = computed(() => {
@@ -174,7 +175,7 @@ const sideBarState = computed(() => {
   if (!isSecondarySideBarOpen.value && !modal.value) return false;
   return modal.value;
 });
-const toggleMenu = () => {
+const closeMenu = () => {
   isMenuOpen.value = false;
   console.log(isSecondarySideBarOpen.value, modal.value);
 };
@@ -206,11 +207,10 @@ const openMenu = (gender) => {
   isMenuOpen.value = true;
 };
 watch(
-  () => props.openMenu,
+  () => route.path,
   (value) => {
-    if (!value) {
-      isMenuOpen.value = false;
-    }
+    isMenuOpen.value = false;
+    isSecondarySideBarOpen.value = false;
   }
 );
 </script>

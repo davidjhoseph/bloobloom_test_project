@@ -7,6 +7,7 @@ export const useMainStore = defineStore({
   state: () => ({
     glasses: [],
     collections: [],
+    loading: false,
   }),
   getters: {
     getGlasses: (state) => state.glasses,
@@ -25,8 +26,14 @@ export const useMainStore = defineStore({
         });
     },
     fetchGlasses(api) {
+      let filteredGlasses = [];
+      this.loading = false;
       axios.get(`${API_URL}${api}`).then((response) => {
-        this.glasses = response.data.glasses;
+        response.data.glasses.forEach((glasses) => {
+          filteredGlasses = [...filteredGlasses, ...glasses.glass_variants];
+        });
+        console.log(response);
+        this.glasses = filteredGlasses;
       });
     },
   },
