@@ -3,16 +3,10 @@
     <div>
       <div class="flex">
         <div class="border-r border-black md:w-1/2">
-          <img
-            src="https://bloobloom.com/_nuxt/img/product3.71c49d9.jpg"
-            class="w-full"
-          />
+          <img :src="bannerImagesToShow[0]" class="w-full" />
         </div>
         <div class="hidden w-1/2 md:block">
-          <img
-            src="https://bloobloom.com/_nuxt/img/product4.585699d.jpg"
-            class="w-full"
-          />
+          <img :src="bannerImagesToShow[1]" class="w-full" />
         </div>
       </div>
       <div class="transition-all duration-300 ease-in transform">
@@ -227,16 +221,22 @@
 <script setup>
 import AppLayout from "@/components/layout/AppLayout.vue";
 import { useRoute } from "vue-router";
-import { ref, computed, watch , onMounted} from "vue";
+import { ref, computed, watch, onMounted } from "vue";
+import { bannerImages } from "@/helpers/constants";
 import { useMainStore } from "@/stores/main";
 const store = useMainStore();
 const route = useRoute();
 onMounted(() => {
   store.fetchGlasses(`${route.path}/glasses`);
 });
+const bannerImageToShowKey = ref(route.path.replace("/collections/", ""));
+const bannerImagesToShow = computed(
+  () => bannerImages[bannerImageToShowKey.value]
+);
 watch(
   () => route.path,
   (value) => {
+    bannerImageToShowKey.value = value.replace("/collections/", "");
     store.fetchGlasses(`${value}/glasses`);
   }
 );
