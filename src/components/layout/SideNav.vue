@@ -176,7 +176,6 @@ const sideBarState = computed(() => {
 });
 const toggleMenu = () => {
   isMenuOpen.value = false;
-  // isSecondarySideBarOpen.value = true;
   console.log(isSecondarySideBarOpen.value, modal.value);
 };
 const selectedGender = ref("women");
@@ -204,7 +203,6 @@ const goToLink = (route) => {
 };
 const openMenu = (gender) => {
   selectedGender.value = gender;
-  // isSecondarySideBarOpen.value = true;
   isMenuOpen.value = true;
 };
 watch(
@@ -212,14 +210,6 @@ watch(
   (value) => {
     if (!value) {
       isMenuOpen.value = false;
-    }
-  }
-);
-watch(
-  () => isMenuOpen.value,
-  (value) => {
-    if (!value) {
-      isSecondarySideBarOpen.value = true;
     }
   }
 );
