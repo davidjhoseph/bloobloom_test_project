@@ -5,7 +5,7 @@
       :class="[isMenuOpen ? 'translate-x-0' : '-translate-x-full']"
     >
       <div
-        @click="isMenuOpen = false"
+        @click="toggleMenu"
         class="flex items-center justify-between p-3 text-lg uppercase border-b border-black md:p-4 hover:bg-black hover:text-white"
       >
         <svg
@@ -174,6 +174,11 @@ const sideBarState = computed(() => {
   if (!isSecondarySideBarOpen.value && !modal.value) return false;
   return modal.value;
 });
+const toggleMenu = () => {
+  isMenuOpen.value = false;
+  // isSecondarySideBarOpen.value = true;
+  console.log(isSecondarySideBarOpen.value, modal.value);
+};
 const selectedGender = ref("women");
 const props = defineProps({
   openMenu: {
@@ -199,6 +204,7 @@ const goToLink = (route) => {
 };
 const openMenu = (gender) => {
   selectedGender.value = gender;
+  // isSecondarySideBarOpen.value = true;
   isMenuOpen.value = true;
 };
 watch(
@@ -206,6 +212,14 @@ watch(
   (value) => {
     if (!value) {
       isMenuOpen.value = false;
+    }
+  }
+);
+watch(
+  () => isMenuOpen.value,
+  (value) => {
+    if (!value) {
+      isSecondarySideBarOpen.value = true;
     }
   }
 );
