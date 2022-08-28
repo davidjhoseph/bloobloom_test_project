@@ -27,6 +27,7 @@ export const useMainStore = defineStore({
     },
     fetchGlasses(api) {
       let filteredGlasses = [];
+      this.glasses = [];
       this.loading = false;
       axios.get(`${API_URL}${api}`).then((response) => {
         response.data.glasses.forEach((glasses) => {

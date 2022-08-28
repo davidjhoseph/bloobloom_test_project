@@ -1,8 +1,10 @@
 <template>
   <div>
     <div
-      class="absolute z-20 w-screen h-screen pt-10 transition-all duration-300 ease-linear transform -translate-x-full bg-white border border-black md:pt-12 md:w-1/4"
+      class="fixed z-20 w-screen h-screen pt-10 transition-all duration-300 ease-linear transform -translate-x-full bg-white border border-black md:pt-12 md:w-1/4"
       :class="[isMenuOpen ? 'translate-x-0' : '-translate-x-full']"
+      @mouseenter="updateSideMenu(true)"
+      @mouseleave="closeAllMenus"
     >
       <div
         @click="closeMenu"
@@ -68,13 +70,13 @@
     </div>
     <div
       class="absolute z-10 flex flex-col justify-between w-screen h-screen pt-10 transition-all duration-300 ease-linear transform -translate-x-full bg-white border border-black md:pt-12 md:w-1/4"
-      @mouseenter="isSecondarySideBarOpen = true"
-      @mouseleave="isSecondarySideBarOpen = false"
-      :class="[sideBarState ? 'translate-x-0' : '-translate-x-full']"
+      @mouseenter="updateSideMenu(true)"
+      @mouseleave="updateSideMenu(false)"
+      :class="[openMenu ? 'translate-x-0' : '-translate-x-full']"
     >
       <div>
         <div
-          @click="openMenu('women')"
+          @click="updateMenu('women')"
           class="flex items-center justify-between p-3 text-lg uppercase border-b border-black md:p-4 hover:bg-black hover:text-white"
         >
           <div>Women</div>
@@ -94,7 +96,7 @@
           </svg>
         </div>
         <div
-          @click="openMenu('men')"
+          @click="updateMenu('men')"
           class="flex items-center justify-between p-3 text-lg uppercase border-b border-black md:p-4 hover:bg-black hover:text-white"
         >
           <div>Men</div>
@@ -163,29 +165,30 @@
 </template>
 
 <script setup>
-import { ref, toRef, watch, computed } from "vue";
+import { ref, watch } from "vue";
 import { useRouter, useRoute } from "vue-router";
 const isMenuOpen = ref(false);
 const router = useRouter();
 const route = useRoute();
-const modal = toRef(props, "openMenu");
-const isSecondarySideBarOpen = ref(false);
-const sideBarState = computed(() => {
-  if (isSecondarySideBarOpen.value && !modal.value) return true;
-  if (!isSecondarySideBarOpen.value && !modal.value) return false;
-  return modal.value;
-});
+
 const closeMenu = () => {
   isMenuOpen.value = false;
-  console.log(isSecondarySideBarOpen.value, modal.value);
 };
 const selectedGender = ref("women");
-const props = defineProps({
+defineProps({
   openMenu: {
     type: Boolean,
     default: false,
   },
 });
+const emits = defineEmits(["updateSideMenu"]);
+const updateSideMenu = (menu) => {
+  emits("updateSideMenu", menu);
+};
+const closeAllMenus = () => {
+  isMenuOpen.value = false;
+  emits("updateSideMenu", false);
+};
 const goToLink = (route) => {
   let routeName = "";
   if (selectedGender.value === "women" && route === "spectacles") {
@@ -202,7 +205,7 @@ const goToLink = (route) => {
   }
   router.push({ name: routeName });
 };
-const openMenu = (gender) => {
+const updateMenu = (gender) => {
   selectedGender.value = gender;
   isMenuOpen.value = true;
 };
@@ -210,7 +213,6 @@ watch(
   () => route.path,
   (value) => {
     isMenuOpen.value = false;
-    isSecondarySideBarOpen.value = false;
   }
 );
 </script>
