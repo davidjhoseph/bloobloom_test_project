@@ -1,6 +1,8 @@
 <template>
   <div class="pb-10">
     <div class="flex flex-wrap">
+      <!-- Had to do it like this for now -->
+
       <div
         class="flex-shrink-0 w-full border md:w-1/2 lg:w-1/3 h-96"
         v-for="glass in glasses"
